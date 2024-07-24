@@ -25,18 +25,18 @@ public class Customer {
     private Long id;
 
     @NotBlank
-    private String typeId;
+    private String tipoId;
 
     @NotNull
     private int numId;
 
     @Size(min = 2) // EL NUMERO MINIMO DE CARACTERES QUE DEBE TENER EL NOMBRE ES DE 2
     @NotBlank
-    private String name;
+    private String nombre;
 
     @Size(min = 2)
     @NotBlank
-    private String lastName;
+    private String apellido;
 
     @Email // VALIDAMOS QUE TENGA UN FORMATO DE CORREO ELECTRONICO
     @NotBlank
@@ -44,29 +44,16 @@ public class Customer {
 
     @Past
     @Column(nullable = false)
-    private LocalDate birthdate;
+    private LocalDate fechaNacimiento;
 
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
-    private LocalDateTime creationDate;
+    private LocalDateTime fechaCreacion;
 
     @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime modicationDate;
+    private LocalDateTime fechaModificacion;
 
-
-    // EL PREPERSIST SIRVE PARA INICIALIZAR LOS DATOS ANTES DE CREAR LA PERSISTENCIA EN LA BASE DE DATOS
-    @PrePersist
-    protected void onCreate(){
-        this.creationDate = LocalDateTime.now();
-        this.modicationDate = LocalDateTime.now();
-    }
-
-    // EN ESTA ACTUALIZAMOS LA FECHA DE MODIFICACION JUSTO ANTES DE HACER LA PERSISTENCIA DE NUEVO EN LA BASE DE DATOS
-    @PreUpdate
-    protected void onUpdate(){
-        this.modicationDate = LocalDateTime.now();
-    }
 
 
 

@@ -31,25 +31,25 @@ public class Product {
     private AccountType accountType;
 
     @Column(unique = true, length = 10)
-    private String accountNum;
+    private String numeroCuenta;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     private AccountState accountState;
 
     @PositiveOrZero
-    private Double balance;
+    private Double Saldo;
 
     @NotNull
     private Boolean gmf;
 
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
-    private LocalDateTime creationDate;
+    private LocalDateTime fechaCreacion;
 
     @UpdateTimestamp
     @Column(nullable = false)
-    private LocalDateTime modificationDate;
+    private LocalDateTime fechaModificacion;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -59,23 +59,16 @@ public class Product {
 
     @PrePersist
     protected void onCreate(){
-        this.creationDate = LocalDateTime.now();
-        this.modificationDate = LocalDateTime.now();
         if (this.accountType == AccountType.AHORRO){
             this.accountState = AccountState.ACTIVA;
-            this.accountNum = generateAccountNumber("53");
+            this.numeroCuenta = generarNumeroCuenta("53");
         } else if (this.accountType == AccountType.CORRIENTE) {
-            this.accountNum = generateAccountNumber("33");
+            this.numeroCuenta = generarNumeroCuenta("33");
         }
     }
 
-    @PreUpdate
-    protected void onUpdate() {
-        this.modificationDate = LocalDateTime.now();
-    }
-
     // ESTE METODO SIRVE PARA GENERAR EL NUMERO DE CUENTA EN AUTOMATICO
-        private String generateAccountNumber(String prefijo) {
+        private String generarNumeroCuenta(String prefijo) {
         return prefijo + String.format("%08d", (int) (Math.random() * 100000000));
     }
 
