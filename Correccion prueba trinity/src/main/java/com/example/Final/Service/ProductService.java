@@ -31,7 +31,7 @@ public class ProductService implements IProductService {
   }
 
   @Override
-  public Product save(@Valid Product product) {
+  public Product  save(@Valid Product product) {
     if (product.getAccountType() == AccountType.AHORRO && product.getSaldo() < 0 ){
       throw new IllegalArgumentException("La cuenta de ahorro no puede tener un saldo menor a 0");
     }
@@ -106,7 +106,6 @@ public class ProductService implements IProductService {
 
   @Override
   public void cancelateProduct(Long id) {
-
     Optional<Product> productOptional = repository.findById(id);
 
     if (productOptional.isPresent()){
